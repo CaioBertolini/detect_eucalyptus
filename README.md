@@ -65,6 +65,19 @@ O script gera dois arquivos no diretório de saída:
 - `detections.geojson`: Vetores geográficos das detecções em formato GeoJSON
 - `metrics.json`: Métricas calculadas, incluindo número total de detecções, área total, detecções por hectare, desvio padrão, índice de Gini e PV50
 
+Exemplo do conteúdo do arquivo `metrics.json`:
+
+```json
+{
+    "total_detections": 156,
+    "total_area_ha": 0.08541225000000002,
+    "detections_per_ha": 1826.4359035150105,
+    "desvio_padrao": 1.0270071659840696,
+    "gini": 0.18412202070738656,
+    "pv50": 37.079945799457995
+}
+```
+
 ## Estrutura do Projeto
 
 ```

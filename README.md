@@ -14,8 +14,8 @@ Este repositório contém um script em Python para detectar brotos de eucalipto 
 Clone este repositório para sua máquina local:
 
 ```bash
-git clone https://github.com/seu-usuario/seu-repositorio.git
-cd seu-repositorio
+git clone https://github.com/CaioBertolini/detect_eucalyptus.git
+cd detect_eucalyptus
 ```
 
 ### 2. Criação de Ambiente Virtual

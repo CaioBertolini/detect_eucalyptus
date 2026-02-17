@@ -99,6 +99,23 @@ def main():
 
     print(f"Vetorização concluída. Total de vetores criados: {len(gdf)}. Calculando áreas e métricas...")
 
+    # Verificar interseção entre polígonos e remover sobreposições
+    rows_drop = []
+    for i in range(len(gdf)):
+        if i in rows_drop:
+            continue
+        for j in range(i+1, len(gdf)):
+            if j in rows_drop:
+                continue
+            if gdf.geometry[i].centroid.intersects(gdf.geometry[j]) and gdf.geometry[j].centroid.intersects(gdf.geometry[i]):
+                if gdf.geometry[i].area >= gdf.geometry[j].area:
+                    rows_drop.append(j)
+                else:
+                    rows_drop.append(i)
+            
+    # Remover linhas duplicadas
+    gdf = gdf.drop(rows_drop).reset_index(drop=True)
+
     # Conversão para utm para calcular áreas em metros quadrados
     estimated_utm = gdf.estimate_utm_crs()
     gdf = gdf.to_crs(estimated_utm)
@@ -107,7 +124,7 @@ def main():
     gdf['area'] = gdf.geometry.area
 
     # Filtrar por área mínima (1 m²) para evitar detecções muito pequenas
-    gdf = gdf[gdf.geometry.area > 1]
+    gdf = gdf[gdf.geometry.area > 1]    
 
     # Cacular a quantidade total de hectares da imagem, desconsiderando no data
     total_area_ha = (np.sum(np.where((img[:,:,0] + img[:,:,1] + img[:,:,2])>0,1,0)) * (args.gsd ** 2)) / 10000
